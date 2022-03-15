@@ -57,7 +57,7 @@ async def exclude(ctx, arg):
     print(exclude_users)
     await ctx.message.channel.send(f"User with ID {arg} excluded!")
 
-@bot.command(name="incldue", pass_context=True)
+@bot.command(name="include", pass_context=True)
 @has_permissions(manage_messages=True)
 async def include(ctx, arg):
     if arg in exclude_users:
