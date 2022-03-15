@@ -63,6 +63,8 @@ async def include(ctx, arg):
     if arg in exclude_users:
         exclude_users.remove(arg)
         await ctx.message.channel.send(f"User {arg} now tracked again!")
+    else:
+        await ctx.message.channel.send(f"User {arg} was never untracked!")
 
 @bot.command(name="help", pass_context=True)
 @has_permissions(manage_messages=True)
