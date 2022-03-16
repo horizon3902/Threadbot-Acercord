@@ -45,7 +45,7 @@ async def get_id(ctx):
 @has_permissions(manage_messages=True)
 async def stop(ctx, arg):
     if str(ctx.message.guild).lower() in tracking_channels and int(arg) in tracking_channels[str(ctx.message.guild).lower()]:
-        tracking_channels[str(ctx.message.guild).lower()].remove(int(arg))
+        tracking_channels[str(ctx.message.guild).lower()] = [val for val in tracking_channels[str(ctx.message.guild).lower()] if val != int(arg)]
         await ctx.message.channel.send(f"Stopped Tracking {arg} channel!")
     else:
         await ctx.message.channel.send("Error!")
