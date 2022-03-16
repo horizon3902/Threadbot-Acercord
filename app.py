@@ -48,7 +48,7 @@ async def stop(ctx, arg):
         tracking_channels[str(ctx.message.guild).lower()].remove(int(arg))
         await ctx.message.channel.send(f"Stopped Tracking {arg} channel!")
     else:
-        await("Error!")
+        await ctx.message.channel.send("Error!")
 
 @bot.command(name="exclude", pass_context=True)
 @has_permissions(manage_messages=True)
