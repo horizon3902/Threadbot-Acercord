@@ -109,15 +109,9 @@ async def include_error(ctx, error):
 
 @bot.event
 async def on_message(message):
-    print(exclude_users)
     if str(message.author.id) not in exclude_users:
-        try:
-            print(str(message.guild).lower(), tracking_channels)
-        except:
-            print('oopsie')
-            await bot.process_commands(message)
         if  bot.command_prefix not in message.content and str(message.guild).lower() in tracking_channels and message.channel.id in tracking_channels[str(message.guild).lower()]:
-            name = ' '.join(message.content.partition('issues:')[2].split()[:5])
+            name = ' '.join(message.content.partition('issue:')[2].split()[:5])
             await message.create_thread(
                 name=name,
                 auto_archive_duration=1440,
