@@ -66,10 +66,21 @@ async def include(ctx, arg):
     else:
         await ctx.message.channel.send(f"User {arg} was never untracked!")
 
+@bot.command(name="close", pass_context=True)
+@has_permissions(manage_messages=True, manage_threads=True)
+async def close(ctx):
+    await ctx.channel.edit(name='[closed]' + ctx.channel.name)
+
+@bot.command(name="solve", pass_context=True)
+@has_permissions(manage_messages=True, manage_threads=True)
+async def solve(ctx):
+    await ctx.channel.edit(name='[solved]' + ctx.channel.name, archived=True)
+
+
 @bot.command(name="help", pass_context=True)
 @has_permissions(manage_messages=True)
 async def help(ctx):
-    await ctx.message.channel.send(f"1. `<>exclude user_id`: Won't Create threads for this user.\n2. `<>include user_id`: Track an excluded user again\n3. `<>track channel_id`: This channel is tracked to create threads\n4. `<>stop channel_id`: This channel is stopped tracking\n5. `<>get_id`: Used to get id of current channel.")
+    await ctx.message.channel.send(f"1. `<>exclude user_id`: Won't Create threads for this user.\n2. `<>include user_id`: Track an excluded user again\n3. `<>track channel_id`: This channel is tracked to create threads\n4. `<>stop channel_id`: This channel is stopped tracking\n5. `<>get_id`: Used to get id of current channel\n6. `<>close`: Close current thread (does not archive)\n7. `<>solve`: Solve current thread (archives the thread)")
 
 @track.error
 async def add_error(ctx, error):
@@ -100,6 +111,24 @@ async def exclude_error(ctx, error):
 
 @include.error
 async def include_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
+        await ctx.message.channel.send(text)
+    elif isinstance(error, commands.MissingRequiredArgument):
+        text = f"Missing a required argument: {error.param}"
+        await ctx.message.channel.send(text)
+
+@close.error
+async def close_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
+        await ctx.message.channel.send(text)
+    elif isinstance(error, commands.MissingRequiredArgument):
+        text = f"Missing a required argument: {error.param}"
+        await ctx.message.channel.send(text)
+
+@solve.error
+async def solve_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
         await ctx.message.channel.send(text)
