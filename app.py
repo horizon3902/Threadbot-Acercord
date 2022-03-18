@@ -208,6 +208,8 @@ async def on_message(message):
             triggers = [x for x in message.content.lower().split() if x in track_replies[str(message.guild).lower()]]
             for trigger in triggers:
                 await message.channel.send(track_replies[str(message.guild).lower()][trigger])
+        else:
+            await bot.process_commands(message)
     else:
         await bot.process_commands(message)
 
