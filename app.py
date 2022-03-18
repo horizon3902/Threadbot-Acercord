@@ -204,12 +204,10 @@ async def on_message(message):
                 name=name,
                 auto_archive_duration=1440,
             )
-        else:
-            await bot.process_commands(message)
-    if str(message.guild).lower() in track_replies and message.author != bot.user and bot.command_prefix not in message.content:
-        triggers = [x for x in message.content.lower().split() if x in track_replies[str(message.guild).lower()]]
-        for trigger in triggers:
-            await message.channel.send(track_replies[str(message.guild).lower()][trigger])
+        if str(message.guild).lower() in track_replies and message.author != bot.user and bot.command_prefix not in message.content:
+            triggers = [x for x in message.content.lower().split() if x in track_replies[str(message.guild).lower()]]
+            for trigger in triggers:
+                await message.channel.send(track_replies[str(message.guild).lower()][trigger])
     else:
         await bot.process_commands(message)
 
