@@ -205,7 +205,7 @@ async def on_message(message):
                 auto_archive_duration=1440,
             )
         if str(message.guild).lower() in track_replies and message.author != bot.user and bot.command_prefix not in message.content:
-            triggers = [x for x in track_replies[str(message.guild).lower()] if message.content.lower().find(x) ]
+            triggers = [x for x in track_replies[str(message.guild).lower()] if message.content.lower().find(x) != -1]
             for trigger in triggers:
                 await message.channel.send(track_replies[str(message.guild).lower()][trigger])
         else:
